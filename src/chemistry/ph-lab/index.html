@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pH 指示剂与滴定实验室 - 化学实验</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div id="app-container">
+    <!-- 侧边控制台 -->
+    <aside id="sidebar">
+      <div class="logo">CHEMISTRY LAB</div>
+      
+      <div class="control-group">
+        <span class="group-title">滴定液选择</span>
+        <div class="reagent-selector">
+          <button class="reagent-btn active" data-type="acid">盐酸 (HCl)</button>
+          <button class="reagent-btn" data-type="base">氢氧化钠 (NaOH)</button>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <span class="group-title">滴加控制</span>
+        <div class="titration-controls">
+          <button id="btn-drop" class="btn-action">滴加 (1滴)</button>
+          <button id="btn-stream" class="btn-action">连续流出</button>
+          <button id="btn-reset" class="btn-outline">重置实验</button>
+        </div>
+      </div>
+
+      <div class="theory-note">
+        <div class="note-title">实验原理</div>
+        <p>万用指示剂在不同 pH 值下的颜色：</p>
+        <div class="color-scale">
+          <div class="scale-item" style="background:#ef4444">0</div>
+          <div class="scale-item" style="background:#f97316">3</div>
+          <div class="scale-item" style="background:#eab308">6</div>
+          <div class="scale-item" style="background:#22c55e">7</div>
+          <div class="scale-item" style="background:#3b82f6">9</div>
+          <div class="scale-item" style="background:#6366f1">12</div>
+          <div class="scale-item" style="background:#a855f7">14</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- 实验绘图区 -->
+    <main id="workspace">
+      <!-- 滴定管 -->
+      <div id="burette-container">
+        <div class="burette">
+          <div class="liquid-line" id="burette-liquid"></div>
+        </div>
+        <div class="nozzle"></div>
+      </div>
+
+      <!-- 烧杯 -->
+      <div id="beaker-container">
+        <div class="beaker">
+          <div class="liquid" id="solution-liquid"></div>
+          <div class="beaker-marks">
+            <span>500ml</span>
+            <span>400ml</span>
+            <span>300ml</span>
+            <span>200ml</span>
+            <span>100ml</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 电子 pH 计 -->
+      <div id="ph-meter">
+        <div class="meter-label">pH METER</div>
+        <div class="meter-value" id="val-ph">7.00</div>
+        <div class="meter-status" id="val-status">Neutral</div>
+      </div>
+
+      <div class="lab-title">酸碱指示剂模拟实验</div>
+    </main>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+:root {
+  --bg-dark: #050810;
+  --panel-bg: rgba(10, 15, 30, 0.8);
+  --proton-color: #ef4444;
+  --neutron-color: #94a3b8;
+  --electron-color: #38bdf8;
+  --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-dark);
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+}
+
+#app-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Sidebar */
+#sidebar {
+  width: 320px;
+  background: var(--panel-bg);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid var(--glass-border);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+}
+
+.logo {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--electron-color);
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
+}
+
+/* Element Card */
+.element-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.card-header {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 0.5rem;
+}
+
+.atomic-number {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  color: #64748b;
+}
+
+.symbol {
+  font-size: 4rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.element-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.element-mass {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+/* Stats */
+.stats-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 2rem;
+}
+
+.stat-item {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 12px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.stat-item .label {
+  font-size: 0.6rem;
+  color: #475569;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.stat-item .value {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1rem;
+}
+
+/* Particle Bins */
+.particle-bins {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bin-title {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: #475569;
+  margin-bottom: 5px;
+}
+
+.bin-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.bin-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--electron-color);
+}
+
+.p-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.2rem;
+}
+
+.p-icon.proton { background: var(--proton-color); }
+.p-icon.neutron { background: var(--neutron-color); color: #000; }
+.p-icon.electron { background: var(--electron-color); }
+
+.p-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.p-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.p-count {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.7rem;
+  color: #64748b;
+}
+
+.btn-reset {
+  margin-top: auto;
+  background: transparent;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* Viewport */
+#viewport-container {
+  flex: 1;
+  position: relative;
+}
+
+#three-viewport {
+  width: 100%;
+  height: 100%;
+}
+
+.viewport-overlay {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  pointer-events: none;
+}
+
+.shell-label {
+  font-size: 0.75rem;
+  color: #334155;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+}

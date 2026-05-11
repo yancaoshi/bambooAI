@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>光学实验室 - 反射实验</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div id="app-container">
+    <!-- 侧边器材栏 -->
+    <aside id="sidebar">
+      <div class="logo">OPTICS LAB</div>
+      
+      <div class="equipment-group">
+        <span class="group-title">光源控制</span>
+        <div class="tool-item" id="add-laser">
+          <div class="tool-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2">
+              <path d="M12 5v14M5 12h14"></path>
+            </svg>
+          </div>
+          <span class="tool-name">放置激光发射器</span>
+        </div>
+        <div class="tool-item" id="laser-color-control" style="cursor: default; display: none;">
+          <div class="tool-info">
+            <div class="tool-name" style="font-size: 0.75rem; color: #64748b;">当前激光颜色</div>
+            <div class="color-picker" id="global-color-picker">
+              <div class="color-dot active" data-color="#ff0000" style="background: #ff0000;"></div>
+              <div class="color-dot" data-color="#00ff00" style="background: #00ff00;"></div>
+              <div class="color-dot" data-color="#0088ff" style="background: #0088ff;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="equipment-group">
+        <span class="group-title">光学元件</span>
+        <div class="tool-item" id="add-mirror">
+          <div class="tool-icon">
+            <rect width="24" height="4" x="0" y="10" fill="#94a3b8"></rect>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2">
+              <line x1="4" y1="12" x2="20" y2="12"></line>
+              <line x1="4" y1="14" x2="6" y2="12"></line>
+              <line x1="8" y1="14" x2="10" y2="12"></line>
+              <line x1="12" y1="14" x2="14" y2="12"></line>
+              <line x1="16" y1="14" x2="18" y2="12"></line>
+            </svg>
+          </div>
+          <span class="tool-name">放置平面镜</span>
+        </div>
+      </div>
+
+      <div class="equipment-group" style="margin-top: auto;">
+        <div class="info-card">
+          <strong>实验提示：</strong><br>
+          拖拽元件移动位置<br>
+          按住 <strong>Shift</strong> 旋转角度<br>
+          点击元件可进行选中
+        </div>
+      </div>
+    </aside>
+
+    <!-- 主工作区 -->
+    <main id="workspace">
+      <canvas id="lab-canvas"></canvas>
+      
+      <div class="overlay-info">
+        <div class="info-card" id="angle-display">
+          入射角: <span id="incident-angle">0</span>° | 
+          反射角: <span id="reflection-angle">0</span>°
+        </div>
+      </div>
+
+      <div class="controls-hint">
+        顶视图 - 物理反射模拟 v1.0
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

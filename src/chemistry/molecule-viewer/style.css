@@ -1,0 +1,206 @@
+:root {
+  --bg-dark: #080a0f;
+  --panel-bg: rgba(13, 17, 28, 0.85);
+  --accent: #38bdf8;
+  --glass-border: rgba(255, 255, 255, 0.08);
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-dark);
+  color: #f1f5f9;
+  font-family: 'Outfit', sans-serif;
+}
+
+#app-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Sidebar */
+#sidebar {
+  width: 320px;
+  background: var(--panel-bg);
+  backdrop-filter: blur(25px);
+  border-right: 1px solid var(--glass-border);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+}
+
+.logo {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 2.5rem;
+  letter-spacing: 2px;
+  background: linear-gradient(to right, #38bdf8, #818cf8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.control-group {
+  margin-bottom: 2rem;
+}
+
+.group-title {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: #475569;
+  letter-spacing: 2px;
+  margin-bottom: 1.2rem;
+  display: block;
+}
+
+select {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 12px;
+  outline: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.toggle-group {
+  display: flex;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+}
+
+.toggle-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #64748b;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.toggle-btn.active {
+  background: rgba(56, 189, 248, 0.15);
+  color: var(--accent);
+}
+
+label {
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+  margin-top: 15px;
+}
+
+label span {
+  float: right;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.molecule-info {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid var(--glass-border);
+  margin-top: 1rem;
+}
+
+.formula {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+.name {
+  font-size: 1rem;
+  color: #94a3b8;
+  margin-bottom: 10px;
+}
+
+.description {
+  font-size: 0.75rem;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.legend {
+  margin-top: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  font-size: 0.7rem;
+  color: #64748b;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* Viewport */
+#viewport-container {
+  flex: 1;
+  position: relative;
+  background-image: 
+    radial-gradient(circle at 50% 50%, #1e293b 0%, #080a0f 100%);
+}
+
+#three-viewport {
+  width: 100%;
+  height: 100%;
+}
+
+.axes-helper {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  display: flex;
+  gap: 15px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.7rem;
+  opacity: 0.3;
+}
+
+.axis.x { color: #f87171; }
+.axis.y { color: #4ade80; }
+.axis.z { color: #38bdf8; }
+
+.interaction-hint {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #334155;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}

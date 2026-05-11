@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>彩虹原理实验室 - 科学探索</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div id="app-container">
+    <!-- 侧边栏：原理与控制 -->
+    <aside id="sidebar">
+      <div class="logo">RAINBOW LAB</div>
+      
+      <div class="control-group">
+        <span class="group-title">实验参数</span>
+        <label>入射位置 (h): <span id="val-h">0.50</span></label>
+        <input type="range" id="param-h" min="-0.95" max="0.95" step="0.01" value="0.70">
+        <p class="hint">上下移动光束，观察出射角变化</p>
+      </div>
+
+      <div class="theory-panel">
+        <div class="theory-title">形成原理</div>
+        <ol class="theory-list">
+          <li><strong>一次折射</strong>：阳光进入水滴并分解成不同颜色（色散）。</li>
+          <li><strong>内部反射</strong>：光线在水滴背面发生全反射。</li>
+          <li><strong>二次折射</strong>：光线离开水滴，折射出美丽的色彩。</li>
+        </ol>
+        <div class="math-box">
+          主虹出射角约为 <strong>42°</strong><br>
+          (相对于入射光反方向)
+        </div>
+      </div>
+
+      <div class="legend">
+        <div class="legend-item"><span class="dot red"></span> 红光 (n≈1.333)</div>
+        <div class="legend-item"><span class="dot violet"></span> 紫光 (n≈1.344)</div>
+      </div>
+    </aside>
+
+    <!-- 主实验区 -->
+    <main id="workspace">
+      <canvas id="rainbow-canvas"></canvas>
+      
+      <!-- 实时数据叠加 -->
+      <div class="overlay-metrics">
+        <div class="metric-card">
+          <div class="label">偏向角 (Deviation)</div>
+          <div class="value" id="dev-angle">--</div>
+        </div>
+        <div class="metric-card">
+          <div class="label">彩虹角 (Rainbow Angle)</div>
+          <div class="value accent" id="rainbow-angle">--</div>
+        </div>
+      </div>
+
+      <div class="instruction">
+        直接拖拽入射光线调节高度
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>万花尺 - 科学实验室</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div id="app-container">
+    <!-- 控制面板 -->
+    <aside id="sidebar">
+      <div class="logo">SPIROGRAPH</div>
+      
+      <div class="control-group">
+        <label>外圆半径 (R): <span id="val-R">150</span></label>
+        <input type="range" id="param-R" min="50" max="300" value="150">
+      </div>
+
+      <div class="control-group">
+        <label>内圆半径 (r): <span id="val-r">52</span></label>
+        <input type="range" id="param-r" min="1" max="200" value="52">
+      </div>
+
+      <div class="control-group">
+        <label>画笔偏移 (d): <span id="val-d">80</span></label>
+        <input type="range" id="param-d" min="0" max="200" value="80">
+      </div>
+
+      <div class="control-group">
+        <label>绘制速度: <span id="val-speed">10</span></label>
+        <input type="range" id="param-speed" min="1" max="50" value="10">
+      </div>
+
+      <div class="control-group">
+        <label>线条颜色</label>
+        <div class="color-palette">
+          <div class="color-swatch active" data-color="#38bdf8" style="background: #38bdf8;"></div>
+          <div class="color-swatch" data-color="#4ade80" style="background: #4ade80;"></div>
+          <div class="color-swatch" data-color="#c084fc" style="background: #c084fc;"></div>
+          <div class="color-swatch" data-color="#fb923c" style="background: #fb923c;"></div>
+          <div class="color-swatch" data-color="#f87171" style="background: #f87171;"></div>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button id="btn-draw" class="btn-primary">开始绘制</button>
+        <button id="btn-random" class="btn-secondary">随机参数</button>
+        <button id="btn-clear" class="btn-outline">清除画布</button>
+      </div>
+
+      <div class="math-info">
+        <div class="info-title">数学公式</div>
+        <code>x = (R-r)cosθ + d cos((R-r)/r θ)</code><br>
+        <code>y = (R-r)sinθ - d sin((R-r)/r θ)</code>
+      </div>
+    </aside>
+
+    <!-- 绘图区 -->
+    <main id="canvas-container">
+      <canvas id="spiro-canvas"></canvas>
+      <div id="status-overlay">准备就绪</div>
+    </main>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D 分子架构师 - 化学可视化</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+  <!-- Three.js from CDN -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div id="app-container">
+    <!-- 侧边栏：分子控制 -->
+    <aside id="sidebar">
+      <div class="logo">MOLECULE ARCHITECT</div>
+      
+      <div class="control-group">
+        <span class="group-title">分子预设</span>
+        <select id="preset-select">
+          <option value="water">水 (H₂O)</option>
+          <option value="methane">甲烷 (CH₄)</option>
+          <option value="ammonia">氨气 (NH₃)</option>
+          <option value="co2">二氧化碳 (CO₂)</option>
+          <option value="ethanol">乙醇 (C₂H₅OH)</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <span class="group-title">显示模式</span>
+        <div class="toggle-group">
+          <button class="toggle-btn active" data-mode="ball-stick">球棍模型</button>
+          <button class="toggle-btn" data-mode="space-filling">比例模型</button>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <span class="group-title">动态参数</span>
+        <label>键长缩放: <span id="val-bond-length">1.0</span></label>
+        <input type="range" id="param-bond-length" min="0.5" max="2.0" step="0.1" value="1.0">
+        
+        <label>热运动强度: <span id="val-vibration">0</span></label>
+        <input type="range" id="param-vibration" min="0" max="1" step="0.1" value="0">
+      </div>
+
+      <div class="molecule-info" id="molecule-card">
+        <div class="formula" id="info-formula">H₂O</div>
+        <div class="name" id="info-name">水分子</div>
+        <p class="description" id="info-desc">一种由两个氢原子和一个氧原子组成的极性分子。</p>
+      </div>
+
+      <div class="legend">
+        <div class="legend-item"><span class="dot" style="background:#ef4444"></span> 氧 (O)</div>
+        <div class="legend-item"><span class="dot" style="background:#fff"></span> 氢 (H)</div>
+        <div class="legend-item"><span class="dot" style="background:#64748b"></span> 碳 (C)</div>
+        <div class="legend-item"><span class="dot" style="background:#3b82f6"></span> 氮 (N)</div>
+      </div>
+    </aside>
+
+    <!-- 3D 绘图区 -->
+    <main id="viewport-container">
+      <div id="three-viewport"></div>
+      
+      <!-- 实时坐标系指示器 -->
+      <div class="axes-helper">
+        <div class="axis x">X</div>
+        <div class="axis y">Y</div>
+        <div class="axis z">Z</div>
+      </div>
+
+      <div class="interaction-hint">
+        左键旋转 | 右键平移 | 滚轮缩放
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

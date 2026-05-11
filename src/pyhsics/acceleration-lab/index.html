@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>加速度与牛顿第二定律实验室 - 物理实验</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div id="app-container">
+    <!-- 侧边栏：实验控制 -->
+    <aside id="sidebar">
+      <div class="logo">ACCELERATION LAB</div>
+      
+      <div class="control-group">
+        <span class="group-title">实验参数</span>
+        
+        <label>小车质量 (M): <span id="val-mass-car">1.0</span> kg</label>
+        <input type="range" id="param-mass-car" min="0.5" max="5.0" step="0.1" value="1.0">
+
+        <label>挂钩质量 (m): <span id="val-mass-hook">0.2</span> kg</label>
+        <input type="range" id="param-mass-hook" min="0.05" max="1.0" step="0.05" value="0.2">
+
+        <label>轨道摩擦系数 (μ): <span id="val-friction">0.05</span></label>
+        <input type="range" id="param-friction" min="0" max="0.5" step="0.01" value="0.05">
+
+        <label>打点频率: <span id="val-freq">20</span> Hz</label>
+        <input type="range" id="param-freq" min="5" max="50" step="5" value="20">
+      </div>
+
+      <div class="action-group">
+        <button id="btn-run" class="btn-primary">开始实验</button>
+        <button id="btn-reset" class="btn-outline">重置</button>
+      </div>
+
+      <div class="metrics-panel">
+        <div class="metric-item">
+          <div class="label">理论加速度 (a)</div>
+          <div class="value" id="res-accel">--</div>
+          <div class="unit">m/s²</div>
+        </div>
+      </div>
+
+      <div class="theory-box">
+        <div class="theory-title">物理公式</div>
+        <p>$$a = \frac{mg - \mu Mg}{M + m}$$</p>
+        <p class="desc">加速度与合外力成正比，与总质量成反比。</p>
+      </div>
+    </aside>
+
+    <!-- 主工作区 -->
+    <main id="workspace">
+      <!-- 实验装置展示 -->
+      <section id="simulation-view">
+        <div id="track">
+          <div id="car">
+            <div class="wheel left"></div>
+            <div class="wheel right"></div>
+            <div class="mass-label">M</div>
+          </div>
+          <div id="string"></div>
+          <div id="pulley"></div>
+          <div id="hook">
+            <div class="mass-label">m</div>
+          </div>
+        </div>
+        <div id="ground"></div>
+      </section>
+
+      <!-- 实时图表 -->
+      <section id="charts-view">
+        <div class="chart-container">
+          <div class="chart-title">速度 - 时间 (v-t)</div>
+          <canvas id="chart-vt"></canvas>
+        </div>
+        <div class="chart-container">
+          <div class="chart-title">位移 - 时间 (s-t)</div>
+          <canvas id="chart-st"></canvas>
+        </div>
+      </section>
+      
+      <!-- 打点计时器纸带模拟 -->
+      <section id="tape-view">
+        <div class="tape-label">虚拟纸带 (打点频率: 50Hz)</div>
+        <div id="tape-container">
+          <canvas id="tape-canvas"></canvas>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

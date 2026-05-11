@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D 原子构建器 - 化学实验</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+  <!-- Three.js from CDN -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div id="app-container">
+    <!-- 侧边栏：元素信息 -->
+    <aside id="sidebar">
+      <div class="logo">ATOM BUILDER</div>
+      
+      <div class="element-card">
+        <div class="card-header">
+          <div class="atomic-number" id="val-atomic-num">--</div>
+          <div class="symbol" id="val-symbol">?</div>
+        </div>
+        <div class="element-name" id="val-name">未知元素</div>
+        <div class="element-mass">质量数: <span id="val-mass">0</span></div>
+      </div>
+
+      <div class="stats-panel">
+        <div class="stat-item">
+          <div class="label">净电荷</div>
+          <div class="value" id="val-charge">0</div>
+        </div>
+        <div class="stat-item">
+          <div class="label">稳定性</div>
+          <div class="value" id="val-stability">--</div>
+        </div>
+      </div>
+
+      <div class="particle-bins">
+        <div class="bin-title">添加粒子 (点击添加)</div>
+        <div class="bin-item" id="add-proton">
+          <div class="p-icon proton">+</div>
+          <div class="p-info">
+            <span class="p-name">质子</span>
+            <span class="p-count" id="count-proton">0</span>
+          </div>
+        </div>
+        <div class="bin-item" id="add-neutron">
+          <div class="p-icon neutron">n</div>
+          <div class="p-info">
+            <span class="p-name">中子</span>
+            <span class="p-count" id="count-neutron">0</span>
+          </div>
+        </div>
+        <div class="bin-item" id="add-electron">
+          <div class="p-icon electron">-</div>
+          <div class="p-info">
+            <span class="p-name">电子</span>
+            <span class="p-count" id="count-electron">0</span>
+          </div>
+        </div>
+      </div>
+
+      <button id="btn-reset" class="btn-reset">重置原子</button>
+    </aside>
+
+    <!-- 3D 绘图区 -->
+    <main id="viewport-container">
+      <div id="three-viewport"></div>
+      
+      <div class="viewport-overlay">
+        <div class="shell-label">轨道层级: K, L, M</div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

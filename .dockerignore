@@ -1,0 +1,9 @@
+node_modules
+dist
+server/db/*.sqlite
+server/db/*.sqlite-journal
+.git
+.env
+Dockerfile
+.dockerignore
+README.md

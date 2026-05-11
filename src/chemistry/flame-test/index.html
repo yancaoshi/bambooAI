@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>金属火焰反应实验室 - 化学实验</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div id="app-container">
+    <!-- 侧边说明栏 -->
+    <aside id="sidebar">
+      <div class="logo">FLAME TEST</div>
+      
+      <div class="theory-box">
+        <div class="theory-title">实验步骤</div>
+        <ol>
+          <li>拿起<strong>铂丝笔</strong>。</li>
+          <li>在左侧<strong>稀盐酸</strong>中清洗。</li>
+          <li>蘸取下方的<strong>金属盐粉末</strong>。</li>
+          <li>将笔尖移至<strong>本生灯火焰</strong>中观察。</li>
+        </ol>
+      </div>
+
+      <div class="reference-table">
+        <div class="table-title">颜色对照</div>
+        <div class="ref-item"><span class="dot" style="background:#ff0000"></span> 锶 (Sr) - 深红</div>
+        <div class="ref-item"><span class="dot" style="background:#fbbf24"></span> 钠 (Na) - 黄色</div>
+        <div class="ref-item"><span class="dot" style="background:#a855f7"></span> 钾 (K) - 浅紫</div>
+        <div class="ref-item"><span class="dot" style="background:#4ade80"></span> 铜 (Cu) - 翠绿</div>
+        <div class="ref-item"><span class="dot" style="background:#f87171"></span> 钙 (Ca) - 砖红</div>
+      </div>
+    </aside>
+
+    <!-- 实验桌 -->
+    <main id="lab-bench">
+      <!-- 试剂区 -->
+      <div id="reagents">
+        <div class="reagent-jar wash" id="jar-wash">
+          <div class="label">稀盐酸</div>
+          <div class="liquid"></div>
+        </div>
+        <div class="powders">
+          <div class="powder-jar" data-element="Na" style="--c: #fbbf24">
+            <div class="powder"></div>
+            <div class="label">氯化钠</div>
+          </div>
+          <div class="powder-jar" data-element="Cu" style="--c: #4ade80">
+            <div class="powder"></div>
+            <div class="label">氯化铜</div>
+          </div>
+          <div class="powder-jar" data-element="Sr" style="--c: #ff0000">
+            <div class="powder"></div>
+            <div class="label">氯化锶</div>
+          </div>
+          <div class="powder-jar" data-element="K" style="--c: #a855f7">
+            <div class="powder"></div>
+            <div class="label">氯化钾</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 本生灯 -->
+      <div id="bunsen-burner">
+        <div class="flame-container" id="flame-zone">
+          <div class="flame outer"></div>
+          <div class="flame inner"></div>
+        </div>
+        <div class="burner-body"></div>
+      </div>
+
+      <!-- 铂丝笔 (由 JS 控制位置) -->
+      <div id="wire-loop" class="draggable">
+        <div class="handle"></div>
+        <div class="wire"></div>
+        <div class="loop-tip" id="loop-tip"></div>
+      </div>
+
+      <div id="info-overlay">
+        当前笔尖：<span id="loop-status">干净</span>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

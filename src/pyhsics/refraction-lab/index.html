@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>折射实验室 - 物理实验</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div id="app-container">
+    <!-- 侧边控制栏 -->
+    <aside id="sidebar">
+      <div class="logo">REFRACTION LAB</div>
+      
+      <div class="control-group">
+        <span class="group-title">环境介质 (n1)</span>
+        <select id="env-material">
+          <option value="1.0">空气 (n=1.0)</option>
+          <option value="1.33">水 (n=1.33)</option>
+          <option value="1.52">玻璃 (n=1.52)</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <span class="group-title">物体介质 (n2)</span>
+        <select id="obj-material">
+          <option value="1.33">水 (n=1.33)</option>
+          <option value="1.52" selected>冠牌玻璃 (n=1.52)</option>
+          <option value="1.66">火石玻璃 (n=1.66)</option>
+          <option value="2.42">金刚石 (n=2.42)</option>
+          <option value="1.0">空气 (n=1.0)</option>
+        </select>
+      </div>
+
+      <div class="equipment-group">
+        <span class="group-title">放置器材</span>
+        <div class="tool-item" id="add-block">
+          <div class="tool-name">矩形玻璃砖</div>
+        </div>
+        <div class="tool-item" id="add-prism">
+          <div class="tool-name">等边三棱镜</div>
+        </div>
+        <div class="tool-item" id="add-semicircle">
+          <div class="tool-name">半圆玻璃砖</div>
+        </div>
+      </div>
+
+      <div class="equipment-group" style="margin-top: auto;">
+        <div class="info-card">
+          <strong>物理小贴士：</strong><br>
+          斯涅尔定律：<br>
+          <code>n1 * sin(θ1) = n2 * sin(θ2)</code><br>
+          当光从密介质进入疏介质且角度过大时，会发生<strong>全反射</strong>。
+        </div>
+      </div>
+    </aside>
+
+    <!-- 主工作区 -->
+    <main id="workspace">
+      <canvas id="lab-canvas"></canvas>
+      
+      <div class="overlay-info">
+        <div class="info-card" id="critical-angle-display">
+          临界角: <span id="val-critical">--</span>°
+        </div>
+        <div class="info-card warning" id="tir-warning" style="display: none;">
+          ⚠️ 发生全反射
+        </div>
+      </div>
+
+      <div class="controls-hint">
+        拖拽移动 | 旋转手柄调节角度 | 顶视图
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
