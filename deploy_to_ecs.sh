@@ -1,9 +1,14 @@
 #!/bin/bash
 
-# --- CONFIGURATION (FILL THESE IN) ---
-SERVER_USER="your_user"
-SERVER_IP="your_server_ip"
-DEPLOY_DIR="/var/www/study"
+# --- CONFIGURATION (LOADED FROM .env) ---
+# Load variables from .env file
+if [ -f .env ]; then
+  export $(grep -v '^#' .env | xargs)
+fi
+
+SERVER_USER=${DEPLOY_USER:-"root"}
+SERVER_IP=${DEPLOY_IP:-"112.124.68.216"}
+DEPLOY_DIR=${DEPLOY_PATH:-"/var/www/study"}
 # -------------------------------------
 
 echo "🚀 Starting deployment to $SERVER_IP..."

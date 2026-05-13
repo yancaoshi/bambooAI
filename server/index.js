@@ -3,9 +3,15 @@ const cors = require('cors');
 const Database = require('better-sqlite3');
 const path = require('path');
 const fs = require('fs');
+const http = require('http');
+const { Server } = require('socket.io');
 require('dotenv').config();
 
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: { origin: "*" }
+});
 const PORT = process.env.PORT || 4000;
 
 // Middleware
@@ -74,9 +80,7 @@ try {
 } catch (e) {}
 
 db.exec(`
-  -- 管理员账号建议通过环境变量或手动在数据库中创建
-  -- INSERT OR IGNORE INTO users (username, password, role) VALUES ('admin', 'password', 'admin');
-
+  -- 基础表结构初始化
   CREATE TABLE IF NOT EXISTS test_records (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER,
@@ -97,57 +101,70 @@ db.exec(`
   );
 `);
 
-// API Router to handle both /api and /study/api prefixes
+// Router definition
 const apiRouter = express.Router();
-
-apiRouter.get('/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Word Master Backend is running' });
-});
-
-// Simple connection test
-apiRouter.get('/test-page', (req, res) => {
-  res.sendFile(path.join(__dirname, '../dist/test.html'));
-});
 
 // Apply router to both paths
 app.use('/api', apiRouter);
 app.use('/study/api', apiRouter);
 
-// 获取 50 道随机题目 (不再返回正确答案，确保安全)
+// 初始化管理员账号 (从环境变量读取)
+const initAdmin = () => {
+  const adminUser = process.env.ADMIN_USER;
+  const adminPass = process.env.ADMIN_PASS;
+  
+  if (adminUser && adminPass) {
+    try {
+      const stmt = db.prepare('INSERT OR IGNORE INTO users (username, password, role) VALUES (?, ?, ?)');
+      stmt.run(adminUser, adminPass, 'admin');
+      console.log(`[Init] Admin user "${adminUser}" ensured.`);
+    } catch (err) {
+      console.error('[Init] Failed to ensure admin user:', err.message);
+    }
+  }
+};
+initAdmin();
+
+// 抽取题目的通用函数
+const generateQuiz = (limit = 50) => {
+  const words = db.prepare('SELECT * FROM words ORDER BY RANDOM() LIMIT ?').all(limit);
+  return words.map(w => {
+    const type = Math.floor(Math.random() * 3);
+    let distractors, correct, question;
+
+    if (type === 0) {
+      distractors = JSON.parse(w.distractors_zh || '[]');
+      correct = w.translation;
+      question = w.word;
+    } else if (type === 1) {
+      distractors = JSON.parse(w.distractors_en || '[]');
+      correct = w.word;
+      question = w.translation;
+    } else {
+      distractors = JSON.parse(w.distractors_zh || '[]');
+      correct = w.translation;
+      question = w.phonetic || w.word;
+    }
+    
+    const selectedDistractors = [...distractors].sort(() => 0.5 - Math.random()).slice(0, 3);
+    
+    return {
+      id: w.id,
+      type,
+      question,
+      options: [...selectedDistractors, correct].sort(() => 0.5 - Math.random()),
+      correct // 仅用于服务端比对或 Racing 模式同步
+    };
+  });
+};
+
+// 获取 50 道随机题目 (API 接口，隐藏正确答案)
 apiRouter.get('/quiz', (req, res) => {
   try {
-    const words = db.prepare('SELECT * FROM words ORDER BY RANDOM() LIMIT 50').all();
-    
-    const quiz = words.map(w => {
-      const type = Math.floor(Math.random() * 3);
-      let distractors;
-      let correct;
-      let question;
-
-      if (type === 0) {
-        distractors = JSON.parse(w.distractors_zh || '[]');
-        correct = w.translation;
-        question = w.word;
-      } else if (type === 1) {
-        distractors = JSON.parse(w.distractors_en || '[]');
-        correct = w.word;
-        question = w.translation;
-      } else {
-        distractors = JSON.parse(w.distractors_zh || '[]');
-        correct = w.translation;
-        question = w.phonetic || w.word;
-      }
-      
-      const selectedDistractors = [...distractors].sort(() => 0.5 - Math.random()).slice(0, 3);
-      
-      return {
-        id: w.id,
-        type,
-        question,
-        options: [...selectedDistractors, correct].sort(() => 0.5 - Math.random())
-      };
+    const quiz = generateQuiz(50).map(q => {
+      const { correct, ...rest } = q;
+      return rest;
     });
-
     res.json(quiz);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -452,6 +469,183 @@ app.get(/^(?!\/(api|study\/api)\/).*/, (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
+// --- Multi-Room Racing Mode (Socket.io) ---
+let rooms = {}; // { roomId: { status, players, questions, timeLeft, timer, settings: { duration, questionCount } } }
+
+const generateRoomId = () => Math.floor(1000 + Math.random() * 9000).toString();
+
+// 过滤掉不可序列化的对象（如 timer）和敏感数据（如 questions）
+const getSerializableRoom = (room) => {
+  if (!room) return null;
+  const { timer, questions, ...rest } = room;
+  return rest;
+};
+
+io.on('connection', (socket) => {
+  console.log('User connected:', socket.id);
+
+  // 获取房间列表
+  socket.on('getRooms', () => {
+    const roomList = Object.keys(rooms).map(id => ({
+      id,
+      playerCount: Object.keys(rooms[id].players).length,
+      status: rooms[id].status,
+      settings: rooms[id].settings
+    }));
+    socket.emit('roomList', roomList);
+  });
+
+  // 创建房间
+  socket.on('createRoom', ({ username, settings }) => {
+    const roomId = generateRoomId();
+    rooms[roomId] = {
+      status: 'waiting',
+      players: {},
+      questions: [],
+      timeLeft: settings.duration * 60,
+      timer: null,
+      settings: {
+        duration: settings.duration || 5,
+        questionCount: settings.questionCount || 100,
+        maxPlayers: settings.maxPlayers || 10
+      },
+      hostId: socket.id
+    };
+
+    rooms[roomId].players[socket.id] = {
+      username: username || `Host_${socket.id.slice(0, 4)}`,
+      score: 0,
+      progress: 0,
+      finished: false,
+      isHost: true
+    };
+
+    socket.join(roomId);
+    socket.emit('roomJoined', { roomId, roomState: getSerializableRoom(rooms[roomId]) });
+    io.emit('roomListUpdate'); // 通知大厅更新
+  });
+
+  // 加入指定房间
+  socket.on('joinRoom', ({ roomId, username }) => {
+    const room = rooms[roomId];
+    if (!room) return socket.emit('error', '房间不存在');
+    if (Object.keys(room.players).length >= room.settings.maxPlayers) return socket.emit('error', '房间已满');
+    if (room.status !== 'waiting') return socket.emit('error', '比赛已开始');
+
+    room.players[socket.id] = {
+      username: username || `Guest_${socket.id.slice(0, 4)}`,
+      score: 0,
+      progress: 0,
+      finished: false,
+      isHost: false
+    };
+
+    socket.join(roomId);
+    socket.emit('roomJoined', { roomId, roomState: getSerializableRoom(room) }); // 通知加入者进入房间视图
+    io.to(roomId).emit('roomUpdate', getSerializableRoom(room));
+    io.emit('roomListUpdate');
+  });
+
+  // 开始比赛 (仅限房主或管理员)
+  socket.on('startRace', (roomId) => {
+    const room = rooms[roomId];
+    if (!room || room.status === 'racing') return;
+    
+    // 权限检查：必须是房主
+    if (room.hostId !== socket.id) return;
+
+    room.status = 'racing';
+    room.questions = generateQuiz(room.settings.questionCount);
+    room.timeLeft = room.settings.duration * 60;
+    
+    Object.keys(room.players).forEach(id => {
+      room.players[id].score = 0;
+      room.players[id].progress = 0;
+      room.players[id].finished = false;
+    });
+
+    io.to(roomId).emit('raceStarted', {
+      questions: room.questions.map(q => {
+        const { correct, ...rest } = q;
+        return rest;
+      }),
+      timeLeft: room.timeLeft
+    });
+
+    // 启动房间独立计时器
+    if (room.timer) clearInterval(room.timer);
+    room.timer = setInterval(() => {
+      room.timeLeft--;
+      if (room.timeLeft <= 0) {
+        clearInterval(room.timer);
+        room.status = 'finished';
+        io.to(roomId).emit('raceFinished', room.players);
+      } else {
+        io.to(roomId).emit('timerUpdate', room.timeLeft);
+      }
+    }, 1000);
+  });
+
+  // 更新进度
+  socket.on('updateProgress', ({ roomId, index, answer }) => {
+    const room = rooms[roomId];
+    if (!room || room.status !== 'racing') return;
+
+    const player = room.players[socket.id];
+    if (!player) return;
+
+    const question = room.questions[index];
+    if (question && question.correct === answer) {
+      player.score += 1;
+    }
+    player.progress = index + 1;
+
+    if (player.progress >= room.settings.questionCount) {
+      player.finished = true;
+    }
+
+    io.to(roomId).emit('roomUpdate', getSerializableRoom(room));
+
+    // 检查是否全员完成
+    const allFinished = Object.values(room.players).every(p => p.finished);
+    if (allFinished) {
+      clearInterval(room.timer);
+      room.status = 'finished';
+      io.to(roomId).emit('raceFinished', room.players);
+    }
+  });
+
+  socket.on('disconnecting', () => {
+    for (const roomId of socket.rooms) {
+      const room = rooms[roomId];
+      if (room && room.players[socket.id]) {
+        delete room.players[socket.id];
+        
+        // 如果房主走了，移交房主
+        if (room.hostId === socket.id) {
+          const nextHost = Object.keys(room.players)[0];
+          if (nextHost) {
+            room.hostId = nextHost;
+            room.players[nextHost].isHost = true;
+          }
+        }
+
+        if (Object.keys(room.players).length === 0) {
+          clearInterval(room.timer);
+          delete rooms[roomId];
+        } else {
+          io.to(roomId).emit('roomUpdate', getSerializableRoom(room));
+        }
+      }
+    }
+    io.emit('roomListUpdate');
+  });
+
+  socket.on('disconnect', () => {
+    console.log('User disconnected:', socket.id);
+  });
+});
+
+server.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

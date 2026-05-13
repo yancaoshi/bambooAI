@@ -1,19 +1,31 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { resolve } from 'path';
+import path, { resolve } from 'path';
 import fs from 'fs';
 
-// 自动扫描 src 下的所有目录，查找 index.html 作为多页面入口
-const getEntries = () => {
+// 递归扫描 src 下的所有目录，查找 index.html 作为多页面入口
+const getEntries = (dir = resolve(__dirname, 'src')) => {
   const entries = {};
-  const srcPath = resolve(__dirname, 'src');
-  const items = fs.readdirSync(srcPath);
+  const items = fs.readdirSync(dir);
 
   items.forEach(item => {
-    const itemPath = resolve(srcPath, item);
-    const htmlPath = resolve(itemPath, 'index.html');
-    if (fs.statSync(itemPath).isDirectory() && fs.existsSync(htmlPath)) {
-      entries[item] = htmlPath;
+    const itemPath = resolve(dir, item);
+    const stat = fs.statSync(itemPath);
+
+    if (stat.isDirectory()) {
+      // 递归扫描子目录中的 index.html
+      const subEntries = getEntries(itemPath);
+      Object.assign(entries, subEntries);
+      
+      const htmlPath = resolve(itemPath, 'index.html');
+      if (fs.existsSync(htmlPath)) {
+        const relativeKey = path.relative(resolve(__dirname, 'src'), itemPath);
+        entries[relativeKey] = htmlPath;
+      }
+    } else if (item.endsWith('.html')) {
+      // 处理 src 根目录下的 HTML 文件 (如 list.html)
+      const name = item.replace(/\.html$/, '');
+      entries[name] = itemPath;
     }
   });
 
