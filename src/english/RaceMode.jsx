@@ -36,7 +36,12 @@ const RaceMode = ({ user, setView, t }) => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', handleResize);
     
-    const newSocket = io(SOCKET_URL, { reconnectionAttempts: 5, timeout: 10000 });
+    const socketPath = window.location.pathname.includes('/study/') ? '/study/socket.io' : '/socket.io';
+    const newSocket = io(SOCKET_URL, { 
+      path: socketPath,
+      reconnectionAttempts: 5, 
+      timeout: 10000 
+    });
     setSocket(newSocket);
 
     newSocket.on('connect', () => {

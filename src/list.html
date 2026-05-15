@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BambooAI - 互动实验清单</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+SC:wght@300;400;700&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --primary: #10b981;
@@ -31,7 +34,7 @@
             background-color: var(--bg);
             color: var(--text);
             min-height: 100vh;
-            background-image: 
+            background-image:
                 radial-gradient(circle at 20% 30%, rgba(16, 185, 129, 0.05) 0%, transparent 40%),
                 radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.05) 0%, transparent 40%);
             line-height: 1.6;
@@ -181,27 +184,54 @@
 
         /* Responsive Adjustments */
         @media (max-width: 768px) {
-            .logo { font-size: 2.5rem; }
-            .container { padding: 2rem 1.5rem; }
-            .grid { grid-template-columns: 1fr; }
+            .logo {
+                font-size: 2.5rem;
+            }
+
+            .container {
+                padding: 2rem 1.5rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* Animations */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .card {
             animation: fadeIn 0.6s ease backwards;
         }
 
-        .card:nth-child(1) { animation-delay: 0.1s; }
-        .card:nth-child(2) { animation-delay: 0.2s; }
-        .card:nth-child(3) { animation-delay: 0.3s; }
-        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -212,13 +242,17 @@
         <!-- English Section -->
         <h2 class="section-title">语言学习 (English)</h2>
         <div class="grid">
-            <a href="/english/" class="card">
+            <a href="english/" class="card">
                 <div class="card-icon">🔤</div>
                 <h3 class="card-title">Word Master</h3>
                 <p class="card-desc">专业的英语单词评测系统，包含排行榜、学习时长统计及智能纠错。</p>
                 <div class="card-action">
                     进入学习
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
                 </div>
             </a>
         </div>
@@ -226,40 +260,56 @@
         <!-- Physics Section -->
         <h2 class="section-title">物理实验室 (Physics)</h2>
         <div class="grid">
-            <a href="/physics/optics-lab/" class="card">
+            <a href="physics/optics-lab/" class="card">
                 <div class="card-icon">🔭</div>
                 <h3 class="card-title">光学实验室</h3>
                 <p class="card-desc">互动式光学模拟，探索透镜成像、光路追踪与折射定律。</p>
                 <div class="card-action">
                     立即体验
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
                 </div>
             </a>
-            <a href="/physics/refraction-lab/" class="card">
+            <a href="physics/refraction-lab/" class="card">
                 <div class="card-icon">💎</div>
                 <h3 class="card-title">折射定律演示</h3>
                 <p class="card-desc">精确模拟不同介质中的光线折射行为，支持实时参数调整。</p>
                 <div class="card-action">
                     立即体验
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
                 </div>
             </a>
-            <a href="/physics/acceleration-lab/" class="card">
+            <a href="physics/acceleration-lab/" class="card">
                 <div class="card-icon">🏎️</div>
                 <h3 class="card-title">加速度实验室</h3>
                 <p class="card-desc">力学基础实验，直观展示速度、时间与加速度之间的物理关联。</p>
                 <div class="card-action">
                     立即体验
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
                 </div>
             </a>
-            <a href="/physics/prism-dispersion/" class="card">
+            <a href="physics/prism-dispersion/" class="card">
                 <div class="card-icon">🌈</div>
                 <h3 class="card-title">三棱镜色散</h3>
                 <p class="card-desc">模拟白光通过三棱镜后的光谱分解现象，呈现迷人的彩虹效应。</p>
                 <div class="card-action">
                     立即体验
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
                 </div>
             </a>
         </div>
@@ -267,31 +317,43 @@
         <!-- Chemistry Section -->
         <h2 class="section-title">化学实验室 (Chemistry)</h2>
         <div class="grid">
-            <a href="/chemistry/molecule-viewer/" class="card">
+            <a href="chemistry/molecule-viewer/" class="card">
                 <div class="card-icon">🧬</div>
                 <h3 class="card-title">3D 分子查看器</h3>
                 <p class="card-desc">沉浸式 3D 分子结构展示，支持旋转、缩放与化学键观察。</p>
                 <div class="card-action">
                     立即体验
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
                 </div>
             </a>
-            <a href="/chemistry/flame-test/" class="card">
+            <a href="chemistry/flame-test/" class="card">
                 <div class="card-icon">🔥</div>
                 <h3 class="card-title">焰色反应实验</h3>
                 <p class="card-desc">虚拟化学实验，观察不同金属元素在火焰中呈现的特有颜色。</p>
                 <div class="card-action">
                     立即体验
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
                 </div>
             </a>
-            <a href="/chemistry/atom-builder/" class="card">
+            <a href="chemistry/atom-builder/" class="card">
                 <div class="card-icon">⚛️</div>
                 <h3 class="card-title">原子构建器</h3>
                 <p class="card-desc">通过添加质子、中子与电子，亲手构建元素周期表中的原子。</p>
                 <div class="card-action">
                     立即体验
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
                 </div>
             </a>
         </div>
@@ -299,13 +361,17 @@
         <!-- Science Section -->
         <h2 class="section-title">自然科学 (Science)</h2>
         <div class="grid">
-            <a href="/science/rainbow-lab/" class="card">
+            <a href="science/rainbow-lab/" class="card">
                 <div class="card-icon">🧪</div>
                 <h3 class="card-title">彩虹实验室</h3>
                 <p class="card-desc">综合性科学实验，通过多种方式探索光的色彩奥秘。</p>
                 <div class="card-action">
                     立即体验
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
                 </div>
             </a>
         </div>
@@ -315,4 +381,5 @@
         </footer>
     </div>
 </body>
+
 </html>

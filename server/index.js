@@ -12,6 +12,13 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: { origin: "*" }
 });
+
+// 支持多路径访问 Socket.io (适配 Nginx 是否剥离 /study 前缀的两种情况)
+server.prependListener('request', (req, res) => {
+  if (req.url.startsWith('/study/socket.io')) {
+    req.url = req.url.replace('/study/socket.io', '/socket.io');
+  }
+});
 const PORT = process.env.PORT || 4000;
 
 // Middleware
@@ -435,7 +442,7 @@ apiRouter.delete('/admin/users/:id', (req, res) => {
 
 // Multi-page SPA support & Fallback
 // 极致宽容模式：根据路径尝试匹配 dist 下的 index.html
-app.get(/^(?!\/(api|study\/api)\/).*/, (req, res) => {
+app.get(/^(?!\/(api|study\/api|socket\.io)\/).*/, (req, res) => {
   const urlPath = req.path;
   
   // 1. 尝试匹配具体页面 (english, earth-globe, optics-lab)
